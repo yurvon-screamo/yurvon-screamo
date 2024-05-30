@@ -1,4 +1,4 @@
-## Hi there 👋
+![Banner](./media/lennart-butz-idea5anim4.gif)
 
 <!--
 **yurvon-screamo/yurvon-screamo** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
