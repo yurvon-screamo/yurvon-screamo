@@ -19,7 +19,7 @@
 
 ### [Saunter](https://github.com/asyncapi/saunter)
 
-Saunter is an open-source project under the AsyncAPI Foundation, designed to enhance the experience of working with AsyncAPI specifications.
+Saunter is an open-source project under the AsyncAPI Foundation. Code-first AsyncAPI documentation generator for dotnet.
 
 ### [🌸 Utsukushii](https://github.com/yurvon-screamo/utsukushii)
 
