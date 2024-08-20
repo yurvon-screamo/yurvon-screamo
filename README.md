@@ -32,6 +32,7 @@ Utsukushii is a small tool designed to transform your test reports into beautifu
 ## 📫 Contact Me
 
 - **Email**: [yurvon@ya.ru](mailto:yurvon@ya.ru)
+- **Telegram**: [@yurvon_screamo](https://t.me/yurvon_screamo)
 
 Feel free to explore my repositories and connect with me for collaboration or just to chat about tech!
 
