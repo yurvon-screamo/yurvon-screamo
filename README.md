@@ -27,7 +27,7 @@ Utsukushii is a small tool designed to transform your test reports into beautifu
 
 ## 📈 GitHub Stats
 
-![Stats](https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=radical)
+![Stats](https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=tokyonight)
 
 ## 📫 Contact Me
 
