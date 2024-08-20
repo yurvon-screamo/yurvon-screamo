@@ -4,7 +4,7 @@
 
 ## 🚀 About Me
 
-- **👨‍💻 Roles**: Tech Lead at [GAGAR>N Company](https://example.com), Maintainer of [Saunter](https://github.com/asyncapi/saunter)
+- **👨‍💻 Roles**: Tech Lead at [GAGAR>N Company](https://gagarin.me), Maintainer of [Saunter](https://github.com/asyncapi/saunter)
 - **💻 Skills**: .NET, GoLang, Software Architecture, Open Source Contribution
 - **🌍 Location**: Russia
 
@@ -15,7 +15,7 @@
 - **Tools**: Docker, Kubernetes, Git, CI/CD Pipelines
 - **APIs**: Grpc, AsyncAPI, REST, GraphQL
 
-## 🌟 Projects
+## 📚 Projects and Contributions
 
 ### [Saunter](https://github.com/asyncapi/saunter)
 
@@ -25,21 +25,14 @@ Saunter is an open-source project under the AsyncAPI Foundation, designed to enh
 
 Utsukushii is a small tool designed to transform your test reports into beautiful, easily understandable formats. Whether your test outputs format, Utsukushii helps you present your results with clarity and style.
 
-## 📚 Contributions
-
-- **AsyncAPI Foundation**: Contributing to various projects, providing support, and ensuring high-quality deliverables.
-- **Open Source**: Actively participating in the open-source community, sharing knowledge, and collaborating on exciting projects.
-
 ## 📈 GitHub Stats
 
-![Yuriy's GitHub Stats](https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=radical)
+![Stats](https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=radical)
 
 ## 📫 Contact Me
 
 - **Email**: [yurvon@ya.ru](mailto:yurvon@ya.ru)
 
 Feel free to explore my repositories and connect with me for collaboration or just to chat about tech!
-
----
 
 Happy day! 🎉
