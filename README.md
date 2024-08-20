@@ -25,6 +25,12 @@ Saunter is an open-source project under the AsyncAPI Foundation. Code-first Asyn
 
 Utsukushii is a small tool designed to transform your test reports into beautiful, easily understandable formats. Whether your test outputs format, Utsukushii helps you present your results with clarity and style.
 
+### [Redfish.Mockup.Server](https://github.com/yurvon-screamo/Redfish.Mockup.Server)
+
+A simple dotnet aot 8.0 program that can be copied into a folder at the top of any Redfish mockup and can serve Redfish requests on the specified IP/port.
+
+Idea from - [DMTF](https://github.com/DMTF/Redfish-Mockup-Server) (with more performance, but with less functionality).
+
 ## 📈 GitHub Stats
 
 ![Stats](https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=tokyonight)
