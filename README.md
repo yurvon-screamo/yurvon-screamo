@@ -17,13 +17,13 @@
 
 ## 📚 Projects and Contributions
 
-### [Saunter](https://github.com/asyncapi/saunter)
-
-Saunter is an open-source project under the AsyncAPI Foundation. Code-first AsyncAPI documentation generator for dotnet.
-
 ### [🌸 Utsukushii](https://github.com/yurvon-screamo/utsukushii)
 
 Utsukushii is a small tool designed to transform your test reports into beautiful, easily understandable formats. Whether your test outputs format, Utsukushii helps you present your results with clarity and style.
+
+### [Saunter](https://github.com/asyncapi/saunter)
+
+Saunter is an open-source project under the AsyncAPI Foundation. Code-first AsyncAPI documentation generator for dotnet.
 
 ### [Redfish.Mockup.Server](https://github.com/yurvon-screamo/Redfish.Mockup.Server)
 
