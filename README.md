@@ -4,7 +4,7 @@
 
 ## 🚀 About Me
 
-- **👨‍💻 Roles**: Tech Lead at [GAGAR>N Company](https://gagarin.me), Maintainer of [Saunter](https://github.com/asyncapi/saunter)
+- **👨‍💻 Roles**: Tech Lead at [GAGAR>N Company](https://en.gagarin.me/), Maintainer of [Saunter](https://github.com/asyncapi/saunter)
 - **💻 Skills**: .NET, GoLang, Software Architecture, Open Source Contribution
 - **🌍 Location**: Russia
 
