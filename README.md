@@ -1,4 +1,4 @@
-![banner](./media/lennart-butz-idea5anim4.gif)
+![uwuwu-title](https://github.com/user-attachments/assets/a652bd62-4617-4626-b8b4-2c6408719aa9)
 
 👋 Hi there! I’m [yurvon-screamo](https://github.com/yurvon-screamo), a passionate software developer and tech lead with a focus on .NET and golang. Currently, I am leading the development of the ITIM product at GAGAR>N Company and maintaining the Saunter project under the AsyncAPI Foundation. I am based in Russia and love collaborating on open-source projects and contributing to the tech community.
 
