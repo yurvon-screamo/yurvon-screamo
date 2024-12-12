@@ -16,6 +16,10 @@
 
 ## 📚 Projects and Contributions
 
+### [StepCa.Client](https://github.com/yurvon-screamo/StepCa.Client)
+
+Minial c# client for native [step-ca](https://github.com/smallstep/certificates) api.
+
 ### [🌸 Utsukushii](https://github.com/yurvon-screamo/utsukushii)
 
 Utsukushii is a small tool designed to transform your test reports into beautiful, easily understandable formats. Whether your test outputs format, Utsukushii helps you present your results with clarity and style.
