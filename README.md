@@ -4,15 +4,9 @@
 
 ## 🚀 About Me
 
-- **👨‍💻 Roles**: Tech Lead at [GAGAR>N Company](https://en.gagarin.me/), Maintainer of [Saunter](https://github.com/asyncapi/saunter)
-- **💻 Skills**: .NET, Rust, GoLang, Software Architecture, Open Source Contribution
+- **👨‍💻 Roles**: Tech Lead, Maintainer of [Saunter](https://github.com/asyncapi/saunter)
+- **💻 Skills**: .NET, Rust, React, System Architecture, Open Source Contribution
 - **🌍 Location**: Russia
-
-## 🔧 Technologies & Tools
-
-- **Languages**: C#, Rust, Go, TypeScript
-- **Tools**: Docker, Kubernetes, Gitlab, CI/CD
-- **APIs**: Grpc, AsyncAPI, REST, GraphQL
 
 ## 📚 Projects and Contributions
 
