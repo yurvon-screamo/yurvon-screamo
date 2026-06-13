@@ -1,42 +1,61 @@
-![uwuwu-title](https://github.com/user-attachments/assets/a652bd62-4617-4626-b8b4-2c6408719aa9)
+# 👋 Hey, I'm yurvon-screamo
 
-👋 Hi there! I’m [yurvon-screamo](https://github.com/yurvon-screamo), a passionate software developer and tech lead with a focus on .NET and golang. Currently, I am leading the development of the ITIM product at GAGAR>N Company and maintaining the Saunter project under the AsyncAPI Foundation. I am based in Russia and love collaborating on open-source projects and contributing to the tech community.
+**Tech Lead** building AI tooling in Rust and enterprise systems in .NET.
+Based in Russia. Open-source contributor and product builder.
 
-## 🚀 About Me
+```text
+Rust 🦀  ·  .NET / C#  ·  Python (AI)  ·  TypeScript
+```
 
-- **👨‍💻 Roles**: Tech Lead, Maintainer of [Saunter](https://github.com/asyncapi/saunter)
-- **💻 Skills**: .NET, Rust, React, System Architecture, Open Source Contribution
-- **🌍 Location**: Russia
+---
 
-## 📚 Projects and Contributions
+## 🌐 Products
 
-### [StepCa.Client](https://github.com/yurvon-screamo/StepCa.Client)
+### 🌸 [Origa](https://github.com/yurvon-screamo/origa)
+Learn Japanese from what you read, watch, and listen to. Built-in dictionaries, kanji trainer, grammar reference, and **200K+ native phrases with voice acting**. FSRS spaced repetition, Leptos + Tauri.
+🌐 [origa.uwuwu.net](https://origa.uwuwu.net)
 
-Minial c# client for native [step-ca](https://github.com/smallstep/certificates) api.
+### 🔤 [japanese-ocr](https://github.com/yurvon-screamo/japanese-ocr)
+Pure Rust, **WASM-compatible** Manga OCR port — runs in the browser.
 
-### [🌸 Utsukushii](https://github.com/yurvon-screamo/utsukushii)
+### 📖 [Specification-Driven Development](https://github.com/yurvon-screamo/specification-driven-development)
+A methodology guide for building complex systems from specifications.
 
-Utsukushii is a small tool designed to transform your test reports into beautiful, easily understandable formats. Whether your test outputs format, Utsukushii helps you present your results with clarity and style.
+---
 
-### [Saunter](https://github.com/asyncapi/saunter)
+## 🔧 .NET Engineering
 
-Saunter is an open-source project under the AsyncAPI Foundation. Code-first AsyncAPI documentation generator for dotnet.
+Enterprise-grade libraries and performance work.
 
-### [Redfish.Mockup.Server](https://github.com/yurvon-screamo/Redfish.Mockup.Server)
+| Project | What it is |
+|---------|------------|
+| ⚡ [1brc](https://github.com/yurvon-screamo/1brc) | **1 Billion Row Challenge** — safe C# in 5.5s on i5-1240P |
+| 🔐 [StepCa.Client](https://github.com/yurvon-screamo/StepCa.Client) | Minimal C# client for native [step-ca](https://github.com/smallstep/certificates) API |
+| 🖥️ [Redfish.Mockup.Server](https://github.com/yurvon-screamo/Redfish.Mockup.Server) | .NET AOT 8.0 server for Redfish BMC mockups (iDRAC/iLO) |
+| 🔢 [SourceGenLinq](https://github.com/yurvon-screamo/SourceGenLinq) | Parameterized `IQueryable` sorting via Roslyn `IncrementalGenerator` |
 
-A simple dotnet aot 8.0 program that can be copied into a folder at the top of any Redfish mockup and can serve Redfish requests on the specified IP/port.
+---
 
-Idea from - [DMTF](https://github.com/DMTF/Redfish-Mockup-Server) (with more performance, but with less functionality).
+## 📈 Stats
 
-## 📈 GitHub Stats
+<p>
+  <img height="160" src="https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=tokyonight" />
+  <img height="160" src="https://github-readme-stats.vercel.app/api/top-langs/?username=yurvon-screamo&layout=compact&hide_border=true&theme=tokyonight" />
+</p>
 
-![Stats](https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=tokyonight)
+---
 
-## 📫 Contact Me
+## 💼 Experience
 
-- **Email**: [yurvon@ya.ru](mailto:yurvon@ya.ru)
-- **Telegram**: [@yurvon_screamo](https://t.me/yurvon_screamo)
+- **Tech Lead** — building AI tooling, Japanese-learning products, and developer infrastructure
+- Previously: **Tech Lead at GAGAR>N** (ITIM / DCIM product)
+- Past contributor to the **AsyncAPI Foundation** ([Saunter](https://github.com/asyncapi/saunter))
 
-Feel free to explore my repositories and connect with me for collaboration or just to chat about tech!
+---
 
-Happy day! 🎉
+## 📫 Contact
+
+- 📧 [yurvon@ya.ru](mailto:yurvon@ya.ru)
+- 💬 Telegram: [@yurvon_screamo](https://t.me/yurvon_screamo)
+
+Happy hacking! 🎉
