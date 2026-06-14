@@ -40,7 +40,7 @@ Enterprise-grade libraries and performance work.
 ## 📈 Stats
 
 <p>
-  <img height="160" src="https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=tokyonight" />
+  <img height="170" src="https://github-readme-stats.vercel.app/api?username=yurvon-screamo&show_icons=true&hide_title=true&count_private=true&hide=prs&include_all_commits=true&hide_border=true&theme=tokyonight" />
   <img height="160" src="https://github-readme-stats.vercel.app/api/top-langs/?username=yurvon-screamo&layout=compact&hide_border=true&theme=tokyonight" />
 </p>
 
