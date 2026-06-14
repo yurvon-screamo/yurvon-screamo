@@ -49,7 +49,7 @@ Enterprise-grade libraries and performance work.
 ## 💼 Experience
 
 - **Tech Lead** — building AI tooling, Japanese-learning products, and developer infrastructure
-- Previously: **Tech Lead at GAGAR>N** (ITIM / DCIM product)
+- Previously: **Team Lead at GAGAR>N** (ITIM / DCIM product)
 - Past contributor to the **AsyncAPI Foundation** ([Saunter](https://github.com/asyncapi/saunter))
 
 ---
