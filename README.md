@@ -3,9 +3,10 @@
 **Tech Lead** building AI tooling in Rust and enterprise systems in .NET.
 Based in Russia. Open-source contributor and product builder.
 
-```text
-Rust 🦀  ·  .NET / C#  ·  Python (AI)  ·  TypeScript
-```
+- Rust 🦀
+- .NET
+- Python
+- TypeScript
 
 ---
 
