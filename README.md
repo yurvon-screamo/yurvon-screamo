@@ -5,16 +5,6 @@ Based in Russia. Open-source contributor and product builder.
 
 ---
 
-### 🛠️ Tech Stack & Tools
-
-<p align="left">
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=rust,dotnet,py,ts,wasm" />
-  </a>
-</p>
-
----
-
 ## 🌸 [Origa](https://origa.uwuwu.net)
 
 > **Learn Japanese from what you read, watch, and listen to.**
@@ -26,6 +16,14 @@ Based in Russia. Open-source contributor and product builder.
 ---
 
 ## 💼 Experience
+
+### 🛠️ Tech Stack & Tools
+
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=rust,dotnet,py,ts,wasm" />
+  </a>
+</p>
 
 - **Tech Lead** — Architecting AI infrastructure, LLM serving integrations, Japanese-learning ecosystem, and high-load developer tooling.
 - **Team Lead at GAGAR>N** — Led development of ITIM / DCIM enterprise infrastructure products.
@@ -43,5 +41,3 @@ Based in Russia. Open-source contributor and product builder.
     <img src="https://img.shields.io/badge/Telegram-%40yurvon__screamo-0088cc?style=flat-square&logo=telegram&logoColor=white" alt="Telegram" />
   </a>
 </p>
-
-_Happy hacking!_ 🚀
