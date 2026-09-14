@@ -9,7 +9,7 @@ Based in Russia. Open-source contributor and product builder.
 
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=rust,cs,dotnet,py,ts,js,react,html,css,postgres,docker,git,wasm" />
+    <img src="https://skillicons.dev/icons?i=rust,dotnet,py,ts,wasm" />
   </a>
 </p>
 
