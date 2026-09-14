@@ -13,8 +13,6 @@ Based in Russia. Open-source contributor and product builder.
 > `Rust` `Leptos` `Tauri` `WASM`
 > 🌐 **[origa.uwuwu.net](https://origa.uwuwu.net)**
 
----
-
 ## 💼 Experience
 
 ### 🛠️ Tech Stack & Tools
@@ -28,8 +26,6 @@ Based in Russia. Open-source contributor and product builder.
 - **Tech Lead** — Architecting AI infrastructure, LLM serving integrations, Japanese-learning ecosystem, and high-load developer tooling.
 - **Team Lead at GAGAR>N** — Led development of ITIM / DCIM enterprise infrastructure products.
 - **Open Source Contributor** — Past contributor to the **AsyncAPI Foundation** ([Saunter](https://github.com/asyncapi/saunter)).
-
----
 
 ## 📫 Connect With Me
 
