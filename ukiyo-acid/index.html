@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UKIYO-ACID: символизм солнца</title>
+<meta name="description" content="Демо-лонгрид в стиле UKIYO-ACID: японская психоделия 60-х и acid graphics. Спека: DESIGN.md">
+<!--
+  ДЕМО-СТРАНИЦА. Отличия от продакшена по спеке DESIGN.md:
+  1. Шрифты подключены через Google Fonts CDN. В проде: самохостинг @font-face + font-display: swap (спека 2.3).
+  2. GSAP подключён через CDN. В проде: npm-зависимость.
+  3. Коллажи стилизованы инлайн-SVG. В проде: композитные WebP/AVIF из public domain сканов (спека 2.5).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Rubik+Mono+One&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+<noscript>
+  <!-- Без JS: контент виден сразу, патчи и красная нить в финальном состоянии -->
+  <style>
+    .reveal { opacity: 1; translate: none; }
+    .montage__patch { animation: none; }
+    .thread__fill { transform: none; }
+  </style>
+</noscript>
+<style>
+/* ============ ТОКЕНЫ (DESIGN.md 2.2, 2.3) ============ */
+:root {
+  --bg: #000000;
+  --surface: #0E0E10;
+  --ink: #1A1A1E;
+  --line: #26262B;
+  --paper: #F2E9D8;
+  --sun: #FF2A1F;
+  --sun-bright: #FF5540;
+  --acid: #AAFF00;
+  --neon: #FF1F8F;
+  --gold: #FFB000;
+
+  --font-display: "Unbounded", "Golos Text", system-ui, sans-serif;
+  --font-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  --font-stamp: "Rubik Mono One", var(--font-mono);
+  --font-ja: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============ БАЗА ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Зерно на всю страницу (спека 2.5, фикс 8-12%) */
+/* Зерно двухслойное: screen виден на тёмном, multiply на светлом/насыщенном (спека 2.5) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: .16;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: .14;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: var(--paper); text-decoration-color: var(--acid); text-underline-offset: 3px; }
+a:hover { background: var(--acid); color: var(--bg); text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--acid);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+.skip-link:focus { left: 0; }
+
+.container { max-width: 1280px; margin-inline: auto; padding-inline: clamp(20px, 4vw, 32px); }
+
+section { padding-block: clamp(72px, 10vw, 128px); position: relative; }
+
+h1, h2 { font-family: var(--font-display); line-height: 1.05; }
+h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+h3 { font-family: var(--font-body); font-weight: 600; font-size: clamp(1.5rem, 2.5vw, 2.25rem); line-height: 1.2; }
+
+.lead { font-size: clamp(1.125rem, 1.5vw, 1.375rem); line-height: 1.5; }
+
+/* ============ МИКРОГРАФИКА (спека 2.3) ============ */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.micro-stamp {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  opacity: .85;
+  white-space: nowrap;
+}
+.crosshair {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  color: var(--line);
+  pointer-events: none;
+}
+
+/* ============ НАВИГАЦИЯ: одна строка, ≤80px ============ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 56px;
+  padding-inline: clamp(20px, 4vw, 32px);
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom: 1px solid var(--line);
+}
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  text-decoration: none;
+}
+.nav__brand:hover { background: none; color: var(--acid); }
+.nav__brand svg { width: 18px; height: 18px; }
+.nav__links { display: flex; gap: clamp(12px, 2.5vw, 28px); list-style: none; }
+.nav__links a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper);
+  padding: 7px 10px;
+  transition: background 150ms var(--ease), color 150ms var(--ease);
+}
+.nav__links a .n { color: var(--gold); font-size: 0.6875rem; }
+.nav__links a:hover { background: var(--acid); color: var(--bg); }
+.nav__links a:hover .n { color: var(--bg); }
+@media (max-width: 768px) { .nav__links li:nth-child(n+4) { display: none; } }
+
+/* ============ КРАСНАЯ НИТЬ ============ */
+.thread {
+  position: fixed;
+  left: clamp(8px, 1.5vw, 20px);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  z-index: 40;
+  background: var(--line);
+}
+.thread__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--sun);
+  transform-origin: top;
+  transform: scaleY(0);
+}
+@media (prefers-reduced-motion: reduce) { .thread__fill { transform: none; } }
+@media (max-width: 768px) { .thread { display: none; } }
+
+/* ============ HERO ============ */
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  align-items: center;
+  padding-block: 96px;
+  overflow: hidden;
+}
+.hero__scene { position: absolute; inset: 0; z-index: 0; }
+.hero__scene svg { width: 100%; height: 100%; }
+.hero__scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.72) 45%, rgba(0,0,0,0) 72%);
+}
+.hero__inner { position: relative; z-index: 2; }
+.hero__stack { max-width: 720px; display: grid; gap: 20px; }
+.hero__label { color: var(--paper); }
+.hero h1 {
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+.hero h1 .accent {
+  display: inline-block;
+  padding-inline: 0.12em;
+  background: var(--acid);
+  color: var(--bg);
+  transform: rotate(-1.5deg);
+}
+.hero__sub { max-width: 46ch; color: var(--paper); }
+
+.btn {
+  justify-self: start;
+  display: inline-block;
+  padding: 14px 28px;
+  border: 1px solid var(--paper);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 150ms var(--ease), color 150ms var(--ease);
+}
+.btn:hover { background: var(--acid); border-color: var(--acid); color: var(--bg); }
+
+.ja-vert {
+  position: absolute;
+  z-index: 2;
+  right: clamp(24px, 4vw, 48px);
+  top: 50%;
+  translate: 0 -50%;
+  writing-mode: vertical-rl;
+  font-family: var(--font-ja);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.4vw, 2rem);
+  letter-spacing: 0.35em;
+  color: var(--paper);
+  line-break: strict;
+  word-break: normal;
+}
+.ja-vert .small { font-size: .55em; color: var(--gold); margin-block-start: 24px; letter-spacing: .3em; }
+
+.hero__stamps {
+  position: absolute;
+  z-index: 2;
+  left: clamp(20px, 4vw, 32px);
+  bottom: 24px;
+  display: grid;
+  gap: 4px;
+}
+@media (max-width: 768px) {
+  .ja-vert { position: static; translate: none; writing-mode: horizontal-tb; margin-block-start: 8px; }
+  .hero__stamps { position: static; margin-block-start: 24px; }
+  .hero__scene .layer-torii { opacity: .5; }
+}
+
+/* ============ ТИХАЯ СЕКЦИЯ ============ */
+.quiet { background: var(--bg); }
+.quiet .lead { max-width: 62ch; color: var(--paper); }
+.quiet .mono-label { display: block; margin-block-end: 20px; }
+
+/* ============ ГЛАВЫ ============ */
+.chapter-head { display: grid; gap: 16px; margin-block-end: clamp(40px, 6vw, 72px); }
+.chapter-head .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--acid);
+}
+
+/* ============ АРХИВНАЯ СЕТКА (layout-семейство 3) ============ */
+.archive { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.archive article {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: background 150ms var(--ease);
+}
+.archive article:hover { background: var(--acid); }
+.archive article:hover * { color: var(--bg); border-color: var(--bg); }
+.archive__plate {
+  border-bottom: 1px solid var(--line);
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 93% 100%, 86% 96.5%, 72% 99%, 57% 96%, 42% 99.5%, 27% 97%, 13% 100%, 0 96.5%);
+}
+.archive__plate svg { width: 100%; height: auto; }
+.archive__body { padding: 18px 18px 20px; display: grid; gap: 10px; }
+.archive__body p { font-size: 0.9375rem; line-height: 1.5; }
+.archive__num { color: var(--gold); }
+@media (max-width: 768px) { .archive { grid-template-columns: 1fr; } }
+
+/* ============ КОЛЛАЖНЫЙ ВЗРЫВ (layout-семейство 1) ============ */
+.burst {
+  margin-block-start: clamp(56px, 8vw, 96px);
+  position: relative;
+  min-height: min(70vw, 560px);
+  overflow: hidden;
+}
+.burst svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+.burst__caption {
+  position: absolute;
+  z-index: 2;
+  right: clamp(20px, 5vw, 64px);
+  bottom: 24px;
+  max-width: 320px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+
+/* ============ ИНТЕРЛЮДИЯ: цитата-плакат (layout-семейство 4) ============ */
+.placard {
+  position: relative;
+  overflow: hidden;
+  background: var(--sun);
+  color: var(--bg);
+  text-align: center;
+  padding-block: clamp(80px, 12vw, 140px);
+}
+.placard::before {
+  content: "";
+  position: absolute;
+  top: -180px;
+  right: -140px;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.16);
+}
+.placard::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--acid);
+}
+.placard .container { position: relative; z-index: 1; }
+.placard blockquote {
+  margin-inline: auto;
+  max-width: 20ch;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.75rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+.placard .placard-note {
+  margin-block-start: 28px;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  color: var(--bg);
+}
+.placard .chip {
+  display: inline-block;
+  margin-block-start: 24px;
+  padding: 8px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-stamp);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  transform: rotate(-2deg);
+}
+
+/* ============ ГАЛЕРЕЯ ГРАВЮР: scroll-snap (спека 2.10.5) ============ */
+.gallery-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.gallery {
+  margin-block-start: clamp(40px, 6vw, 64px);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(72vw, 420px);
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-block-end: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sun) var(--ink);
+}
+.gallery figure {
+  scroll-snap-align: start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  display: grid;
+}
+.gallery figcaption { padding: 16px 18px; display: grid; gap: 8px; }
+.gallery figcaption p { font-size: 0.9375rem; line-height: 1.5; }
+.gallery svg { width: 100%; height: auto; }
+.gallery-nav { display: flex; gap: 10px; }
+.gallery-nav button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid var(--paper);
+  border-radius: 2px;
+  color: var(--paper);
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background 150ms var(--ease), color 150ms var(--ease);
+}
+.gallery-nav button:hover { background: var(--acid); border-color: var(--acid); color: var(--bg); }
+@media (max-width: 768px) { .gallery { grid-auto-columns: 86vw; } }
+
+/* ============ МИЛИТАРИЗМ: фотомонтаж (layout-семейство 1+5) ============ */
+.montage {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+.montage__scene {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.montage__scene svg { width: 100%; height: auto; }
+.montage__patch {
+  position: absolute;
+  z-index: 2;
+  background: var(--acid);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  padding: 6px 10px;
+  animation: flash 200ms var(--ease) both;
+  animation-play-state: paused;
+}
+.is-in .montage__patch { animation-play-state: running; }
+.montage__patch--pink { background: var(--neon); }
+.montage__patch--a { top: 12%; right: 10%; }
+.montage__patch--b { bottom: 18%; left: 8%; }
+.montage__text { display: grid; gap: 18px; }
+.montage__text p { color: var(--paper); }
+@keyframes flash {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 768px) { .montage { grid-template-columns: 1fr; } }
+
+/* ============ ГЛОССАРИЙ: mono-таблица (layout-семейство 5) ============ */
+.glossary { width: 100%; border-collapse: collapse; margin-block-start: clamp(40px, 6vw, 64px); }
+.glossary caption {
+  text-align: left;
+  padding-block-end: 16px;
+}
+.glossary th, .glossary td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.glossary th {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.glossary td { font-size: 0.9375rem; }
+.glossary td:first-child { font-family: var(--font-ja); font-weight: 700; font-size: 1.5rem; line-break: strict; word-break: normal; }
+.glossary rt { font-size: 50%; color: var(--gold); ruby-align: center; }
+.glossary .reading { font-family: var(--font-mono); color: var(--paper); white-space: nowrap; }
+
+/* ============ КОЛОФОН ============ */
+.colophon { border-top: 1px solid var(--line); padding-block: clamp(56px, 8vw, 96px); }
+.colophon .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.colophon h3 { font-size: 1rem; margin-block-end: 14px; color: var(--gold); font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+.colophon ul { list-style: none; display: grid; gap: 8px; font-size: 0.9375rem; }
+.colophon .note { margin-block-start: 40px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--paper); opacity: .7; }
+@media (max-width: 768px) { .colophon .grid { grid-template-columns: 1fr; } }
+
+/* ============ РЕВИЛЫ (IO + CSS, спека 2.6) ============ */
+.reveal {
+  opacity: 0;
+  translate: 0 24px;
+  transition: opacity 300ms var(--ease), translate 300ms var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-in { opacity: 1; translate: 0 0; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; translate: none; transition: opacity 150ms; }
+  .montage__patch { animation: none; }
+  *, *::before, *::after { transition-duration: 150ms !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+
+<span class="thread" aria-hidden="true"><span class="thread__fill" id="threadFill"></span></span>
+
+<nav class="nav" aria-label="Основная навигация">
+  <a class="nav__brand" href="#top">
+    <svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="5" fill="#FF2A1F"/><g stroke="#FF2A1F" stroke-width="1.4"><line x1="9" y1="0" x2="9" y2="3"/><line x1="9" y1="15" x2="9" y2="18"/><line x1="0" y1="9" x2="3" y2="9"/><line x1="15" y1="9" x2="18" y2="9"/></g></svg>
+    UKIYO-ACID
+  </a>
+  <ul class="nav__links">
+    <li><a href="#prolog"><span class="n">01</span>Пролог</a></li>
+    <li><a href="#solnce"><span class="n">02</span>Солнце</a></li>
+    <li><a href="#gravury"><span class="n">03</span>Гравюры</a></li>
+    <li><a href="#militarizm"><span class="n">04</span>Милитаризм</a></li>
+    <li><a href="#glossary"><span class="n">05</span>Глоссарий</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+  <!-- ============ 1. HERO: full-bleed коллажная сцена ============ -->
+  <section class="hero" id="top" aria-label="Начало лонгрида">
+    <div class="hero__scene" aria-hidden="true">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <rect width="1440" height="900" fill="#000000"/>
+        <!-- лучи солнца -->
+        <g class="layer" data-depth="0.25">
+          <g fill="#FF2A1F" opacity="0.28" transform="translate(880 400)">
+            <polygon points="0,-620 60,0 -60,0"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(30)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(60)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(90)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(120)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(150)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(180)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(210)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(240)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(270)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(300)"/>
+            <polygon points="0,-620 60,0 -60,0" transform="rotate(330)"/>
+          </g>
+        </g>
+        <!-- солнце -->
+        <g class="layer" data-depth="0.12">
+          <circle cx="880" cy="400" r="200" fill="#FF2A1F"/>
+          <circle cx="880" cy="400" r="200" fill="none" stroke="#000000" stroke-width="6" opacity="0.35"/>
+          <path d="M780 345 q40 -50 90 -18 q30 20 60 -4" stroke="#000000" stroke-width="7" fill="none" opacity="0.4"/>
+        </g>
+        <!-- горы -->
+        <g class="layer" data-depth="0.3">
+          <polygon points="0,900 360,520 720,900" fill="#1A1A1E"/>
+          <polygon points="520,900 900,460 1300,900" fill="#0E0E10"/>
+          <polygon points="900,460 940,525 860,525" fill="#F2E9D8" opacity="0.9"/>
+        </g>
+        <!-- торий -->
+        <g class="layer layer-torii" data-depth="0.4">
+          <g transform="translate(1120 470) scale(1.4)" fill="#000000" stroke="#F2E9D8" stroke-width="3">
+            <path d="M10 30 Q105 12 200 30 L196 46 Q105 28 14 46 Z"/>
+            <rect x="30" y="66" width="150" height="12"/>
+            <rect x="52" y="46" width="10" height="130"/>
+            <rect x="148" y="46" width="10" height="130"/>
+            <rect x="98" y="46" width="8" height="20"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="ja-vert" lang="ja"><span>太陽の象徴</span><span class="small">たいようのしょうちょう</span></div>
+
+    <div class="container hero__inner">
+      <div class="hero__stack">
+        <p class="mono-label hero__label">UKIYO-ACID · dark editorial longread · DEMO</p>
+        <h1>Символизм <span class="accent">солнца</span></h1>
+        <p class="hero__sub">Лонгрид о том, как один знак пережил империю, войну и стал языком поп-культуры.</p>
+        <a class="btn" href="#prolog">Читать лонгрид</a>
+      </div>
+    </div>
+
+    <div class="hero__stamps" aria-hidden="true">
+      <span class="micro-stamp">35.3606 N · 138.7274 E</span>
+      <span class="micro-stamp">PL.00 / DEMO SPEC 2.10.1</span>
+    </div>
+  </section>
+
+  <!-- ============ 2. ПРОЛОГ: тихая секция ============ -->
+  <section class="quiet" id="prolog">
+    <div class="container">
+      <div class="reveal">
+        <span class="mono-label">Пролог</span>
+        <p class="lead">Флаг с красным кругом старше самой Японии как современного государства. Солнце в японской культуре считалось воплощением богини Аматэрасу, и его изображение за несколько веков прошло путь от священного знака до государственной символики и элемента поп-культуры. Этот лонгрид разбирает язык солнечных образов: гравюры, плакаты, кинопостеры и антивоенный фотомонтаж. Читайте медленно, каждый слой здесь что-то значит.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. ГЛАВА 1: СОЛНЦЕ ============ -->
+  <section id="solnce">
+    <div class="container">
+      <svg class="crosshair" style="top: 28px; left: 0;" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 0v18M0 9h18" stroke="currentColor" stroke-width="1"/><circle cx="9" cy="9" r="3" fill="none" stroke="currentColor"/></svg>
+      <div class="chapter-head reveal">
+        <p class="eyebrow">Глава 01</p>
+        <h2>Солнце</h2>
+      </div>
+
+      <div class="archive">
+        <article class="reveal" style="--d: 0ms">
+          <div class="archive__plate" role="img" aria-label="Стилизованная пластина: красный диск солнца на светлой бумаге в обрамлении золотых полос">
+            <svg viewBox="0 0 480 300">
+              <rect width="480" height="300" fill="#F2E9D8"/>
+              <rect x="0" y="0" width="480" height="24" fill="#FFB000"/>
+              <rect x="0" y="276" width="480" height="24" fill="#FFB000"/>
+              <circle cx="240" cy="150" r="86" fill="#FF2A1F"/>
+              <path d="M120 150 h44 M316 150 h44 M240 30 v44 M240 226 v44" stroke="#1A1A1E" stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="archive__body">
+            <span class="micro-stamp archive__num">PL.01 · 1850-е ЭДО</span>
+            <h3>Хиномару</h3>
+            <p>Белое полотно и красный диск. Знак известен с эпохи Эдо, статус государственного флага закреплён законом 1999 года.</p>
+          </div>
+        </article>
+
+        <article class="reveal" style="--d: 80ms">
+          <div class="archive__plate" role="img" aria-label="Стилизованная пластина: лучи, расходящиеся из-за горы, монохромный контур">
+            <svg viewBox="0 0 480 300">
+              <rect width="480" height="300" fill="#F2E9D8"/>
+              <g stroke="#1A1A1E" stroke-width="3" fill="none">
+                <path d="M240 150 L240 40"/><path d="M240 150 L330 66"/><path d="M240 150 L150 66"/>
+                <path d="M240 150 L366 150"/><path d="M240 150 L114 150"/>
+                <path d="M240 150 L322 236"/><path d="M240 150 L158 236"/>
+              </g>
+              <polygon points="140,300 240,140 340,300" fill="#1A1A1E"/>
+              <circle cx="240" cy="150" r="30" fill="#FF2A1F"/>
+            </svg>
+          </div>
+          <div class="archive__body">
+            <span class="micro-stamp archive__num">PL.02 · 712 ГОД</span>
+            <h3>Аматэрасу</h3>
+            <p>Богиня солнца в синто, прародительница императорского рода. Ключевой источник образа в кодзики, 712 год.</p>
+          </div>
+        </article>
+
+        <article class="reveal" style="--d: 160ms">
+          <div class="archive__plate" role="img" aria-label="Стилизованная пластина: шестнадцать тонких красных лучей из белого центра">
+            <svg viewBox="0 0 480 300">
+              <rect width="480" height="300" fill="#F2E9D8"/>
+              <g fill="#FF2A1F" transform="translate(240 150)">
+                <polygon points="0,-130 10,0 -10,0"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(22.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(45)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(67.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(90)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(112.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(135)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(157.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(180)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(202.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(225)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(247.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(270)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(292.5)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(315)"/>
+                <polygon points="0,-130 10,0 -10,0" transform="rotate(337.5)"/>
+              </g>
+              <circle cx="240" cy="150" r="26" fill="#F2E9D8"/>
+            </svg>
+          </div>
+          <div class="archive__body">
+            <span class="micro-stamp archive__num">PL.03 · 1870 ГОД</span>
+            <h3>Шестнадцать лучей</h3>
+            <p>Военный флаг Восходящего солнца принят в 1870 году. Сегодня его изображения остаются предметом споров.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- коллажный взрыв -->
+      <div class="burst reveal" role="img" aria-label="Коллажная сцена: красное солнце с кислотными искрами и разорванными бумажными краями">
+        <svg viewBox="0 0 1280 560" preserveAspectRatio="xMidYMid slice">
+          <rect width="1280" height="560" fill="#000000"/>
+          <g transform="rotate(-2 640 280)">
+            <g fill="#FF2A1F">
+              <circle cx="640" cy="280" r="190"/>
+              <polygon points="640,20 676,180 604,180"/>
+              <polygon points="640,540 676,380 604,380"/>
+              <polygon points="360,280 520,246 520,314"/>
+              <polygon points="920,280 760,246 760,314"/>
+              <polygon points="440,80 570,168 524,216"/>
+              <polygon points="840,480 710,392 756,344"/>
+              <polygon points="440,480 570,392 524,344"/>
+              <polygon points="840,80 710,168 756,216"/>
+              <polygon points="230,280 330,258 330,302"/>
+              <polygon points="1050,280 950,258 950,302"/>
+            </g>
+            <g fill="#AAFF00">
+              <polygon points="210,110 300,146 226,208"/>
+              <polygon points="1070,450 980,414 1054,352"/>
+              <polygon points="280,460 340,388 392,460"/>
+              <polygon points="1000,110 942,182 894,110"/>
+              <polygon points="640,280 700,254 700,306" opacity="0.9"/>
+            </g>
+            <g fill="#FF1F8F">
+              <polygon points="150,320 210,300 196,352"/>
+              <polygon points="1130,240 1070,260 1084,208"/>
+            </g>
+            <g stroke="#FF1F8F" stroke-width="4" fill="none" opacity="0.9">
+              <circle cx="640" cy="280" r="216" stroke-dasharray="16 24"/>
+            </g>
+            <g stroke="#FFB000" stroke-width="3" fill="none" opacity="0.8">
+              <circle cx="640" cy="280" r="252" stroke-dasharray="4 18"/>
+            </g>
+          </g>
+        </svg>
+        <p class="burst__caption micro-stamp">Слои: солнце · искры · орбита. Каталожная сцена главы 01.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. ИНТЕРЛЮДИЯ: цитата-плакат ============ -->
+  <aside class="placard" aria-label="Манифест проекта">
+    <div class="container reveal">
+      <blockquote>Солнце не светит. Солнце говорит.</blockquote>
+      <p class="placard-note">Манифест лонгрида: знак старше своих значений.</p>
+      <span class="chip">ГЛАВА 02 СЛЕДУЕТ</span>
+    </div>
+  </aside>
+
+  <!-- ============ 5. ГЛАВА 2: ГРАВЮРЫ, scroll-snap галерея ============ -->
+  <section id="gravury">
+    <div class="container">
+      <div class="gallery-head reveal">
+        <div class="chapter-head" style="margin-block-end: 0;">
+          <p class="eyebrow">Глава 02</p>
+          <h2>Гравюры</h2>
+        </div>
+        <div class="gallery-nav">
+          <button type="button" id="galPrev" aria-label="Прокрутить галерею назад">←</button>
+          <button type="button" id="galNext" aria-label="Прокрутить галерею вперёд">→</button>
+        </div>
+      </div>
+
+      <div class="gallery reveal" id="gallery" role="region" aria-label="Галерея гравюр, горизонтальная прокрутка" tabindex="0">
+        <figure>
+          <svg viewBox="0 0 420 300" role="img" aria-label="Стилизация Большой волны: синяя волна с завитком и белой пеной, Фудзи на горизонте">
+            <rect width="420" height="300" fill="#F2E9D8"/>
+            <polygon points="250,190 320,90 392,190" fill="#1A1A1E"/>
+            <polygon points="308,124 322,108 336,124 328,132 316,126" fill="#F2E9D8"/>
+            <path d="M-10 300 L-10 220 Q80 150 170 190 Q230 215 250 160 Q265 120 310 130 Q360 142 350 195 Q344 232 305 232 Q278 232 272 205 Q268 184 288 178" fill="none" stroke="#1B3B6F" stroke-width="34" stroke-linecap="round"/>
+            <g fill="#F2E9D8">
+              <polygon points="96,168 122,150 128,176"/>
+              <polygon points="176,186 202,172 206,196"/>
+              <polygon points="258,128 280,112 288,136"/>
+              <polygon points="330,146 352,140 350,166"/>
+            </g>
+          </svg>
+          <figcaption>
+            <span class="micro-stamp">PL.04 · ОК. 1831 · ХОКУСАЙ</span>
+            <p>«Большая волна в Канагаве». Серия «Тридцать шесть видов Фудзи», ок. 1831 года.</p>
+          </figcaption>
+        </figure>
+
+        <figure>
+          <svg viewBox="0 0 420 300" role="img" aria-label="Стилизация Красного Фудзи: гора красного цвета со снежной шапкой на чистом небе">
+            <rect width="420" height="300" fill="#BFE0EE"/>
+            <polygon points="30,300 210,52 390,300" fill="#B6402F"/>
+            <polygon points="172,105 210,52 248,105 234,120 224,106 210,122 196,106 186,120" fill="#F2E9D8"/>
+            <path d="M0 262 q60 -14 120 0 t120 0 t120 0 t120 0 v38 h-480 z" fill="#4A6B7C"/>
+          </svg>
+          <figcaption>
+            <span class="micro-stamp">PL.05 · ОК. 1831 · ХОКУСАЙ</span>
+            <p>«Победный ветер, ясный день», известна как Красный Фудзи.</p>
+          </figcaption>
+        </figure>
+
+        <figure>
+          <svg viewBox="0 0 420 300" role="img" aria-label="Стилизация Грозы под вершиной: тёмная гора и молния">
+            <rect width="420" height="300" fill="#C9C4B4"/>
+            <polygon points="10,300 220,30 410,300" fill="#26262B"/>
+            <polygon points="184,79 220,30 256,79 242,94 232,80 218,96 204,80 194,94" fill="#F2E9D8"/>
+            <g stroke="#FFB000" stroke-width="8" fill="none">
+              <path d="M300 20 L272 96 L306 104 L268 190"/>
+            </g>
+            <g fill="#AAFF00" opacity="0.9">
+              <rect x="40" y="40" width="14" height="14" transform="rotate(45 47 47)"/>
+              <rect x="366" y="230" width="14" height="14" transform="rotate(45 373 237)"/>
+            </g>
+          </svg>
+          <figcaption>
+            <span class="micro-stamp">PL.06 · ОК. 1831 · ХОКУСАЙ</span>
+            <p>«Гроза под вершиной». Молния как второй знак неба в той же серии.</p>
+          </figcaption>
+        </figure>
+
+        <figure>
+          <svg viewBox="0 0 420 300" role="img" aria-label="Стилизация ливня: диагональные линии дождя над мостом и силуэтом людей">
+            <rect width="420" height="300" fill="#DAD3C0"/>
+            <g stroke="#26262B" stroke-width="3" opacity="0.7">
+              <line x1="20" y1="-20" x2="-20" y2="60"/><line x1="70" y1="-20" x2="30" y2="60"/><line x1="120" y1="-20" x2="80" y2="60"/>
+              <line x1="170" y1="-20" x2="130" y2="60"/><line x1="220" y1="-20" x2="180" y2="60"/><line x1="270" y1="-20" x2="230" y2="60"/>
+              <line x1="320" y1="-20" x2="280" y2="60"/><line x1="370" y1="-20" x2="330" y2="60"/><line x1="420" y1="-20" x2="380" y2="60"/>
+            </g>
+            <path d="M-10 190 Q210 130 430 190 L430 206 Q210 146 -10 206 Z" fill="#1A1A1E"/>
+            <rect x="40" y="200" width="340" height="8" fill="#1A1A1E"/>
+            <g fill="#1A1A1E">
+              <rect x="90" y="206" width="6" height="50"/><rect x="200" y="206" width="6" height="50"/><rect x="310" y="206" width="6" height="50"/>
+            </g>
+            <path d="M150 206 q12 -26 26 0 M244 206 q12 -26 26 0" fill="none" stroke="#1A1A1E" stroke-width="10"/>
+          </svg>
+          <figcaption>
+            <span class="micro-stamp">PL.07 · 1857 · ХИРОСИГЭ</span>
+            <p>«Ливень над Синоносним мостом» из серии «Сто видов Эдо».</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. ГЛАВА 3: МИЛИТАРИЗМ, фотомонтаж ============ -->
+  <section id="militarizm">
+    <div class="container">
+      <div class="chapter-head reveal">
+        <p class="eyebrow">Глава 03</p>
+        <h2>Милитаризм</h2>
+      </div>
+
+      <div class="montage">
+        <div class="montage__scene reveal" role="img" aria-label="Монтажная сцена: чёрно-белый силуэт бомбардировщика на полутоновом круге, поверх неоновые служебные метки">
+          <svg viewBox="0 0 640 440">
+            <defs>
+              <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+                <circle cx="7" cy="7" r="2.2" fill="#F2E9D8" opacity="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="640" height="440" fill="#1A1A1E"/>
+            <circle cx="320" cy="220" r="190" fill="url(#dots)"/>
+            <g fill="#F2E9D8">
+              <polygon points="320,60 332,180 560,220 560,236 334,232 326,330 380,352 380,364 320,352 260,364 260,352 314,330 306,232 80,236 80,220 308,180"/>
+            </g>
+            <g fill="#26262B">
+              <circle cx="256" cy="212" r="7"/><circle cx="384" cy="212" r="7"/>
+              <circle cx="256" cy="242" r="7"/><circle cx="384" cy="242" r="7"/>
+            </g>
+            <g stroke="#F2E9D8" stroke-width="2" opacity="0.6" fill="none">
+              <path d="M60 380 h520 M60 374 v12 M580 374 v12"/>
+            </g>
+          </svg>
+          <span class="montage__patch montage__patch--a">DOC. 1945+</span>
+          <span class="montage__patch montage__patch--b montage__patch--pink">ARCHIVE / CUT</span>
+        </div>
+
+        <div class="montage__text reveal">
+          <p>Фотомонтаж сделал войну видимой изнутри. В 1930-е Джон Хартфилд склеивал антифашистские плакаты прямо из газетных снимков. В послевоенной Японии Цунэхиса Кимура соединял документальные фотографии в апокалиптические сцены.</p>
+          <p>Разорванная склейка, чёрно-белый архив и штампы поверх изображения стали языком протеста. Приём пережил своё столетие и остался узнаваемым жестом: документ, которому не доверяют целиком.</p>
+          <span class="micro-stamp">ГЛАВА 03 · ИСТОЧНИКИ: РАЗДЕЛ 1, СЛОЙ 3</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. ГЛОССАРИЙ: mono-таблица с ruby ============ -->
+  <section id="glossary">
+    <div class="container">
+      <div class="chapter-head reveal">
+        <h2>Глоссарий</h2>
+      </div>
+      <table class="glossary reveal">
+        <caption class="mono-label">Знаки главы и их чтение</caption>
+        <thead>
+          <tr><th scope="col">Знак</th><th scope="col">Чтение</th><th scope="col">Смысл</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td lang="ja"><ruby>太陽<rt>たいよう</rt></ruby></td>
+            <td class="reading">тайё:</td>
+            <td>Солнце; воплощение Аматэрасу и центр всей визуальной программы лонгрида.</td>
+          </tr>
+          <tr>
+            <td lang="ja"><ruby>波<rt>なみ</rt></ruby></td>
+            <td class="reading">нами</td>
+            <td>Волна; главный мотив гравюры и метафора распространения образа.</td>
+          </tr>
+          <tr>
+            <td lang="ja"><ruby>鳥居<rt>とりい</rt></ruby></td>
+            <td class="reading">тории</td>
+            <td>Ворота синтоистского храма; граница мира людей и мира знаков.</td>
+          </tr>
+          <tr>
+            <td lang="ja"><ruby>山<rt>やま</rt></ruby></td>
+            <td class="reading">яма</td>
+            <td>Гора; Фудзи как вечный фон японской картинки, от Хокусая до постеров.</td>
+          </tr>
+          <tr>
+            <td lang="ja"><ruby>刀<rt>かたな</rt></ruby></td>
+            <td class="reading">катана</td>
+            <td>Меч; знак воинского слоя, который фотомонтаж XX века переосмыслил критически.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 8. КОЛОФОН ============ -->
+  <footer class="colophon">
+    <div class="container">
+      <div class="grid">
+        <div>
+          <h3>Источники</h3>
+          <ul>
+            <li><a href="https://www.metmuseum.org/art/collection/search?q=ukiyo-e">The Met, открытый доступ</a></li>
+            <li><a href="https://www.loc.gov/collections/fine-prints/">Library of Congress, гравюры</a></li>
+            <li><a href="https://www.vam.ac.uk/articles/japanese-woodblock-prints-ukiyo-e">V&amp;A, статья об укиё-э</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Шрифты</h3>
+          <ul>
+            <li>Unbounded, дисплей</li>
+            <li>Golos Text, текст</li>
+            <li>IBM Plex Mono, подписи</li>
+            <li>Rubik Mono One, метки</li>
+            <li>Noto Serif JP, японский</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Спецификация</h3>
+          <ul>
+            <li>DESIGN.md, версия 2, готовность: ready</li>
+            <li>Стиль: японская психоделия 60-х плюс acid graphics</li>
+            <li>Формат: dark editorial longread</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">ДЕМО-СТРАНИЦА · ГРАФИКА СТИЛИЗОВАНА СРЕДСТВАМИ SVG · ДАТЫ ГРАВЮР ПО ОТКРЫТЫМ ДАННЫМ АРХИВОВ · РАБОТЫ ЁКОО И ТАНААМИ В ПРОДАКШЕНЕ НЕ ИСПОЛЬЗУЮТСЯ, КОПИРАЙТ</p>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---- Ревилы: IntersectionObserver (спека 2.6, без scroll-listeners) ---- */
+  var revealEls = document.querySelectorAll(".reveal");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add("is-in"); });
+  }
+
+  /* ---- Галерея: стрелки прокрутки (клавиатура работает нативно через tabindex) ---- */
+  var gallery = document.getElementById("gallery");
+  var prev = document.getElementById("galPrev");
+  var next = document.getElementById("galNext");
+
+  function step() {
+    var card = gallery.querySelector("figure");
+    return card ? card.getBoundingClientRect().width + 20 : 320;
+  }
+  prev.addEventListener("click", function () { gallery.scrollBy({ left: -step(), behavior: reduceMotion ? "auto" : "smooth" }); });
+  next.addEventListener("click", function () { gallery.scrollBy({ left: step(), behavior: reduceMotion ? "auto" : "smooth" }); });
+
+  /* ---- Scroll-driven: GSAP ScrollTrigger (спека 2.6: GSAP only).
+          Падж плавно деградирует: без GSAP, на touch и при reduced-motion параллакса нет. ---- */
+  var hoverCapable = window.matchMedia("(hover: hover)").matches;
+  if (window.gsap && window.ScrollTrigger && !reduceMotion && hoverCapable) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    var ctx = gsap.context(function () {
+      /* Параллакс слоёв hero (2 скорости) */
+      document.querySelectorAll(".hero .layer").forEach(function (layer) {
+        var depth = parseFloat(layer.getAttribute("data-depth") || "0.2");
+        gsap.fromTo(layer,
+          { yPercent: -depth * 8 },
+          {
+            yPercent: depth * 8,
+            ease: "none",
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+          });
+      });
+
+      /* Красная нить: дорисовывается по мере чтения */
+      gsap.to("#threadFill", {
+        scaleY: 1,
+        ease: "none",
+        scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+      });
+    });
+
+    /* Cleanup по спеке 4: ctx.revert() */
+    window.addEventListener("pagehide", function () { ctx.revert(); }, { once: true });
+  }
+})();
+</script>
+
+</body>
+</html>
